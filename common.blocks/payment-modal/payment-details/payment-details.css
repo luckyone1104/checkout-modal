@@ -1,0 +1,177 @@
+.payment-modal__payment-details {
+  height: 100%;
+  width: 100%;
+  padding: 10vh 2.5vw;
+
+  display: grid;
+ 
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 75px 295px auto;
+  grid-template-areas:
+  ".          right-column"
+  "left-colum right-column"
+  ".          right-column";
+}
+
+.payment-details__left-column {
+  grid-area: left-colum;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.credit-card {
+  height: 100%;
+  width: 472px;
+  border-radius: 22px;
+  background: #3e92b6;
+  background: linear-gradient(90deg, #3e92b6 0%, #459cc4 50%, #2f7da7 100%);
+  transform: scale(1);
+}
+
+.credit-card__first-row {
+  height: 31%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.master-card-logo {
+  height:85%;
+}
+
+.credit-card__payment-system-logo {
+  margin-right: 9%;
+}
+
+.credit-card__second-row {
+  display: flex;
+  align-items: flex-start;
+  height: 20%;
+}
+
+.credit-card__bank-chip-image {
+  margin-left: 6.7%;
+}
+
+.credit-card__card-number,
+.credit-card__fourth-row {
+  margin: 0 9% 0 6.7%;
+  font-size: 200%;
+  /* font-size: 2.22vw; */
+  font-family: "Roboto";
+  font-weight: 300; 
+  letter-spacing: 3px;
+  color: var(--modal-bg);
+}
+
+.credit-card__card-number span {
+  width: 20.846%;
+  margin-right: 2.838%;
+}
+.credit-card__card-number span:last-child {
+  margin-right: 0;
+}
+
+.credit-card__fourth-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 36px;
+  font-size: 22px;
+}
+
+.payment-details__right-column {
+  grid-area: right-column;
+
+  font-family: "Roboto";
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.payment-details__input-info {
+  display: grid;
+  grid-template-rows: 75px 295px auto;
+  grid-template-areas: 
+  "title"
+  "inputs"
+  "buttons";
+}
+
+.payment-details__title-wrapper {
+  grid-area: title;
+  display: flex;
+  flex-direction: column;
+}
+.payment-details__title {
+  font-size: 38px;
+  font-weight: 500;
+  letter-spacing: 1.2px;
+}
+
+.payment-details__inputs-wrapper {
+  grid-area: inputs;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.payment-details__input-form {
+  position: relative;
+  color: #d3d3d3;
+  font-size: 20px;
+}
+
+.payment-details__label {
+  display: block;
+}
+
+.payment-details__inputs-wrapper input {
+  height: 52px;
+  border: none;
+  background-color: #f4f5f7;
+  outline: none;
+  position: relative;
+  width: 100%;
+  font-size: 26px;
+  line-height: 44px;
+}
+
+.payment-details__input-info input::placeholder {
+  line-height: 44px;
+  font-size: 26px;
+  color: #bbbbbb;
+}
+
+.payment-details__bottom-line {
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  border-radius: 2px;
+  border-bottom: 2px solid #dfdfdf;
+
+  transition: border-bottom-color 0.2s ease-in-out;
+}
+
+.payment-details__input-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.payment-details__valid-through-wrapper,
+.payment-details__cvv-wrapper {
+  width: 45%;
+}
+
+.payment-details__buttons-wrapper {
+  grid-area: buttons;
+  display: flex;
+  flex-direction: column;
+}
+
+.payment-details__next-page-button {
+  margin-top: 32px;
+}

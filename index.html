@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="common.blocks/payment-modal/autocomplete/dist/css/autoComplete.02.css">
+
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="common.blocks/payment-modal/payment-modal.css">
+  <link rel="stylesheet" href="common.blocks/payment-modal/menu/menu.css">
+  <link rel="stylesheet" href="common.blocks/payment-modal/order-page/order-page.css">
+  <link rel="stylesheet" href="common.blocks/payment-modal/payment-details/payment-details.css">
+  <link rel="stylesheet" href="common.blocks/payment-modal/shipping-details/shipping-details.css">
+  <link rel="stylesheet" href="common.blocks/payment-modal/confirmation-page/confirmation-page.css">
+  <link rel="stylesheet" href="common.blocks/payment-modal/success-page/success-page.css">
+  <link rel="stylesheet" href="common.blocks/payment-modal/next-step-button/next-step-button.css">
+  <link rel="stylesheet" href="common.blocks/payment-modal/previous-step-button/previous-step-button.css">
+  
+  <title>Order Confirmation</title>
+</head>
+<body>
+  <div class="payment-modal-wrapper">
+    <div class="payment-modal">
+      <div class="payment-modal__menu-wrapper">
+        <ul class="payment-modal__menu">
+          <li class="payment-modal__menu-element payment-modal__menu-element_selected  menu-element__order-page">YOUR ORDER</li>
+          <li class="payment-modal__menu-element menu-element__shipping-details">SHIPPING DETAILS</li>
+          <li class="payment-modal__menu-element menu-element__payment-details menu-element_disabled">PAYMENT DETAILS</li>
+          <li class="payment-modal__menu-element menu-element__confirmation-page menu-element_disabled">CONFIRMATION</li>
+        </ul>
+        <div class="payment-modal__menu-selected-line-wrapper">
+          <div class="payment-modal__menu-selected-line"></div>
+        </div>
+      </div>
+
+      <div class="payment-modal__order-page order-page">
+        <div class="order-page__product-titles-wrapper">
+          <div class="order-page__product-title">Item</div>
+          <div class="order-page__quantity-title ">Quantity</div> 
+          <div class="order-page__price-title">Price</div>
+        </div>
+
+        <div class="order-page__product-wrapper">
+          <div class="order-page__product-photo-wrapper">
+            <img class="order-page__product-photo" src="images/products/monitors.jpg" alt="">
+          </div>
+          <div class="order-page__product-description">
+            <div class="order-page__product-name">
+              PreSonus Eris 3.5
+            </div>
+            <div class="order-page__product-info">
+              Studio monitors
+            </div>
+            <div class="order-page__remove-button">
+              Remove
+            </div>
+          </div>
+          <div class="order-page__quantity">1</div>
+          <div class="order-page__price">$590</div>
+        </div>
+
+        <div class="order-page__product-wrapper">
+          <div class="order-page__product-photo-wrapper">
+            <img class="order-page__product-photo" src="images/products/audio-interface.jpg" alt="">
+          </div>
+          <div class="order-page__product-description">
+            <div class="order-page__product-name">
+              PreSonus c24
+            </div>
+            <div class="order-page__product-info">
+              2-channel audio-interface
+            </div>
+            <div class="order-page__remove-button">
+              Remove
+            </div>
+          </div>
+          <div class="order-page__quantity">1</div>
+          <div class="order-page__price">$260</div>
+        </div>
+
+        <div class="order-page__product-wrapper">
+          <div class="order-page__product-photo-wrapper">
+            <img class="order-page__product-photo" src="images/products/studio-mic.jpg" alt="">
+          </div>
+          <div class="order-page__product-description">
+            <div class="order-page__product-name">
+              PreSonus PD-70
+            </div>
+            <div class="order-page__product-info">
+              Condenser microphone
+            </div>
+            <div class="order-page__remove-button">
+              Remove
+            </div>
+          </div>
+          <div class="order-page__quantity">1</div>
+          <div class="order-page__price">$320</div>
+        </div>
+
+        <div class="order-page__total-sum-row">
+          <div class="order-page__total-sum-wrapper">
+            <span class="order-page__total-title">Total</span>
+            <span class="order-page__total-sum"></span>
+          </div>
+        </div>
+
+        <div class="order-page__button-container">
+          <button class="order-page__next-page-button next-page-button">
+            <span class="next-page-button__title">NEXT STEP</span>
+          </button>
+        </div>
+      </div> <!-- /ORDER PAGE -->
+  
+      <div class="payment-modal__shipping-details shipping-details" style="display: none;">
+        <div class="shipping-details__left-column">
+          <img class="shipping-details__left-image" src="common.blocks/payment-modal/shipping-details/truck.svg" alt="">
+        </div>
+
+        <div class="shipping-details__right-column">
+          <div class="shipping-details__input-info">
+            <div class="shipping-details__title-wrapper">
+              <div class="shipping-details__title">
+                Shipping Details
+              </div>
+            </div>
+  
+            <div class="shipping-details__inputs-wrapper">
+              <div class="shipping-details__input-form">
+                <label class="shipping-details__label" for="">Country *</label>
+                <div class="shipping-details__select-wrapper">
+                  <div class="shipping-details__select-placeholder">Zimbabwe</div>
+                  <select class="shipping-details__select-country validationSensitive" name="countries" id="countries" placeholder="Zimbabwe">
+                    <option></option>
+                  </select>
+                </div>
+                <div class="shipping-details__bottom-line"></div>
+              </div>
+
+              <div class="autoComplete_wrapper">
+                <label class="shipping-details__label shipping-details__input-form" for="">City *</label>
+                <div class="shipping-details__city-input-wrapper">
+                  <input class="checkout-input cityInput defaultCityInput validationSensitive" id="" type="text" maxlength="19" placeholder="Harare">
+                  <div class="shipping-details__bottom-line"></div>
+                </div>
+              </div>
+  
+              <div class="shipping-details__input-form">
+                <label class="shipping-details__label" for="">Street *</label>
+                <input class="checkout-input validationSensitive" id="" type="text" maxlength="19" placeholder="Independence Str">
+                <div class="shipping-details__bottom-line"></div>
+              </div>
+  
+              <div class="shipping-details__input-row">
+                <div class="shipping-details__input-form shipping-details__house-number-wrapper">
+                  <label class="shipping-details__label" for="">House *</label>
+                  <input class="checkout-input validationSensitive" id="" type="text" maxlength="8" placeholder="23">
+                  <div class="shipping-details__bottom-line"></div>
+                </div>
+  
+                <div class="shipping-details__input-form shipping-details__apartment-number--wrapper">
+                  <label class="shipping-details__label" for="">Apartment</label>
+                  <input class="checkout-input" type="text" id="" maxlength="8" placeholder="201">
+                  <div class="shipping-details__bottom-line"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="shipping-details__buttons-wrapper">
+              <button class="shipping-details__next-page-button next-page-button">
+                <span class="next-page-button__title">NEXT STEP</span>
+              </button>
+  
+              <button class="shipping-details__previous-page-button previous-page-button">
+                <span class="previous-page-button__title">← Previous Step</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        
+      </div> <!-- /SHIPPING DETAILS -->
+  
+      <div class="payment-modal__payment-details payment-details" style="display: none;">
+        <div class="payment-details__left-column">
+          <div class="payment-details__credit-card credit-card">
+            <div class="credit-card__first-row">
+              <div class="credit-card__payment-system-logo">
+                <img class="master-card-logo" style="display:none;"  src="common.blocks/payment-modal/payment-details/master-card-logo.svg" alt="">
+                <img class="visa-logo" src="common.blocks/payment-modal/payment-details/visa-logo.svg" alt="">
+              </div>
+            </div>
+
+            <div class="credit-card__second-row">
+              <div class="credit-card__bank-chip-image">
+                <img class="card-chip" src="common.blocks/payment-modal/payment-details/credit-card-chip.svg" alt="">
+              </div>
+            </div>
+
+            <div class="credit_card__third-row">
+              <div class="credit-card__card-number card-number">      
+                <span>0000</span>
+                <span>0000</span>
+                <span>0000</span>
+                <span>0000</span>
+              </div>
+            </div>
+
+            <div class="credit-card__fourth-row">
+              <div class="credit-card__card-holder-name card-holder-name">ARJUN KUNWAR</div>
+              <div class="credit-card__card-expiry-date expiry-date">09/20</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="payment-details__right-column">
+          <div class="payment-details__input-info">
+            <div class="payment-details__title-wrapper">
+              <div class="payment-details__title">Payment Details</div>
+            </div>
+    
+            <div class="payment-details__inputs-wrapper">
+              <div class="payment-details__input-form">
+                <label class="payment-details__label" for="name-on-card">Name on card *</label>
+                <input class="payment-details__name-on-card checkout-input validationSensitive" id="name-on-card" type="text" maxlength="19" placeholder="Arjun Kunwar">
+                <div class="payment-details__bottom-line"></div>
+              </div>
+              <div class="payment-details__input-form">
+                <label class="payment-details__label" for="card-number">Card Number *</label>
+                <input class="payment-details__card-number checkout-input validationSensitive" id="card-number" type="text" minlength="19" maxlength="19" placeholder="5465 3232 4152 5931">
+                <div class="payment-details__bottom-line"></div>
+              </div>
+              <div class="payment-details__input-row">
+                <div class="payment-details__input-form payment-details__valid-through-wrapper">
+                  <label class="payment-details__label" for="valid-through">Valid Through *</label>
+                  <input class="payment-details__valid-through checkout-input validationSensitive" id="valid-through" type="text" minlength="5" maxlength="5" placeholder="02/24">
+                  <div class="payment-details__bottom-line"></div>
+                </div>
+                <div class="payment-details__input-form payment-details__cvv-wrapper">
+                  <label class="payment-details__label" for="card-cvv">CVV *</label>
+                  <input class="payment-details__cvv checkout-input validationSensitive" type="text" id="card-cvv" minlength="3" maxlength="3" placeholder="512">
+                  <div class="payment-details__bottom-line"></div>
+                </div>
+              </div> 
+            </div>
+            
+            <div class="payment-details__buttons-wrapper">
+              <button class="payment-details__next-page-button next-page-button">
+                <span class="next-page-button__title">NEXT STEP</span>
+              </button>
+    
+              <button class="payment-details__previous-page-button previous-page-button">
+                <span class="previous-page-button__title">← Previous Step</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        
+
+
+      </div> <!-- /PAYMENT DETAILS -->
+  
+      <div class="payment-modal__confirmation-page confirmation-page" style="display:none;">
+        <div class="confirmation-page__left-column">
+          <img class="confirmation-page__left-image" src="common.blocks/payment-modal/confirmation-page/confirmation.svg" alt="">
+        </div>
+
+        <div class="confirmation-page__right-column">
+          <div class="confirmation-page__input-info">
+
+            <div class="confirmation-page__title-wrapper">
+              <div class="confirmation-page__title">
+                Confirmation
+              </div>
+            </div>
+        
+            <div class="confirmation-page__inputs-wrapper">
+              <div class="confirmation-page__input-row">
+                <div class="confirmation-page__input-form confirmation-page__customer-name-wrapper">
+                  <label class="confirmation-page__label" for="">Name *</label>
+                  <input class="checkout-input validationSensitive" id="" type="text" maxlength="8" placeholder="Manuel">
+                  <div class="confirmation-page__bottom-line"></div>
+                </div>
+        
+                <div class="confirmation-page__input-form confirmation-page__customer-surname-wrapper">
+                  <label class="confirmation-page__label" for="">Surname *</label>
+                  <input class="checkout-input validationSensitive" type="text" id="" maxlength="10" placeholder="Cornelien">
+                  <div class="confirmation-page__bottom-line"></div>
+                </div>
+              </div>
+              <div class="confirmation-page__input-form">
+                <label class="confirmation-page__label" for="">E-Mail *</label>
+                <input class="checkout-input validationSensitive" id="" type="text" maxlength="24" placeholder="manuel-corniel@mail.com">
+                <div class="confirmation-page__bottom-line"></div>
+              </div>
+        
+              <div class="confirmation-page__input-form">
+                <label class="confirmation-page__label" for="">Phone Number *</label>
+                <input class="checkout-input validationSensitive" id="" type="text" maxlength="15" placeholder="312-412-34-76">
+                <div class="confirmation-page__bottom-line"></div>
+              </div>
+            </div>
+  
+            <div class="confirmation-page__buttons-wrapper">
+              <button class="confirmation-page__pay-button pay-button next-page-button">
+                <span>PAY</span>
+                <span class="pay-button__total-sum">$450.00</span>
+              </button>
+              <button class="shipping-details__previous-page-button previous-page-button">
+                <span class="previous-page-button__title">← Previous Step</span>
+              </button>
+            </div>
+
+          </div>
+        </div>        
+      </div> <!-- /CONFIRMATION PAGE -->
+
+      <div class="payment-modal__success-page success-page" style="display: none;">
+        <div class="success-page__svg-icon">
+          <?xml version="1.0" encoding="iso-8859-1"?>
+          <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            viewBox="0 0 507.2 507.2" style="enable-background:new 0 0 507.2 507.2;" xml:space="preserve">
+          <circle style="fill:#73afc4;" cx="253.6" cy="253.6" r="253.6"/>
+          <path style="fill:#618aa0;" d="M188.8,368l130.4,130.4c108-28.8,188-127.2,188-244.8c0-2.4,0-4.8,0-7.2L404.8,152L188.8,368z"/>
+          <g>
+            <path style="fill:#FFFFFF;" d="M260,310.4c11.2,11.2,11.2,30.4,0,41.6l-23.2,23.2c-11.2,11.2-30.4,11.2-41.6,0L93.6,272.8
+              c-11.2-11.2-11.2-30.4,0-41.6l23.2-23.2c11.2-11.2,30.4-11.2,41.6,0L260,310.4z"/>
+            <path style="fill:#FFFFFF;" d="M348.8,133.6c11.2-11.2,30.4-11.2,41.6,0l23.2,23.2c11.2,11.2,11.2,30.4,0,41.6l-176,175.2
+              c-11.2,11.2-30.4,11.2-41.6,0l-23.2-23.2c-11.2-11.2-11.2-30.4,0-41.6L348.8,133.6z"/>
+          </g>
+          <g>
+          </g>
+          <g>
+          </g>
+          <g>
+          </g>
+          <g>
+          </g>
+          <g>
+          </g>
+          <g>
+          </g>
+          <g>
+          </g>
+          <g>
+          </g>
+          <g>
+          </g>
+          <g>
+          </g>
+          <g>
+          </g>
+          <g>
+          </g>
+          <g>
+          </g>
+          <g>
+          </g>
+          <g>
+          </g>
+          </svg>
+        </div>
+        
+
+      </div>
+    </div>
+  </div>
+  
+  <script src="common.blocks/payment-modal/payment-modal.js"></script>
+  <script src="common.blocks/payment-modal/menu/menu.js"></script>
+  <script src="common.blocks/payment-modal/shipping-details/shipping-details.js"></script>
+  <script src="common.blocks/payment-modal/payment-details/payment-details.js"></script>
+  <script src="common.blocks/payment-modal/order-page/order-page.js"></script>
+  
+  <script src="common.blocks/payment-modal/autocomplete/dist/js/autoComplete.js"></script>
+  <script src="common.blocks/payment-modal/autocomplete/auto-complete-objects.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,150 @@
+.payment-modal__confirmation-page {
+  height: 100%;
+  width: 100%;
+  padding: 10vh 2.5vw;
+
+  display: grid;
+ 
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 75px 295px auto;
+  grid-template-areas:
+  ".          right-column"
+  "left-colum right-column"
+  ".          right-column";
+}
+
+.confirmation-page__left-column {
+  grid-area: left-colum;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.confirmation-page__left-image {
+  height: 100%;
+  padding-right: 5vw;
+}
+
+.confirmation-page__right-column {
+  grid-area: right-column;
+
+  font-family: "Roboto";
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.confirmation-page__input-info {
+  display: grid;
+  grid-template-rows: 75px 295px auto;
+  grid-template-areas: 
+  "title"
+  "inputs"
+  "buttons";
+}
+
+.confirmation-page__title-wrapper {
+  grid-area: title;
+  display: flex;
+  flex-direction: column;
+}
+
+.confirmation-page__title {
+  font-size: 38px;
+  font-weight: 500;
+  letter-spacing: 1.2px;
+}
+
+.confirmation-page__inputs-wrapper {
+  grid-area: inputs;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.confirmation-page__input-form {
+  position: relative;
+  color: #d3d3d3;
+  font-size: 20px;
+}
+
+.confirmation-page__label {
+  display: block;
+  /* margin-top: 4px; */
+}
+
+.confirmation-page__input-info input {
+  height: 52px;
+  border: none;
+  background-color: #f4f5f7;
+  outline: none;
+  position: relative;
+  width: 100%;
+  font-size: 26px;
+  line-height: 44px;
+}
+
+.confirmation-page__input-info input::placeholder {
+  line-height: 44px;
+  font-size: 26px;
+  color: #bbbbbb;
+}
+
+.confirmation-page__bottom-line {
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  border-radius: 2px;
+  border-bottom: 2px solid #dfdfdf;
+
+  transition: border-bottom-color 0.2s ease-in-out;
+}
+
+.confirmation-page__input-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.confirmation-page__customer-name-wrapper,
+.confirmation-page__customer-surname-wrapper {
+  width: 45%;
+}
+
+.confirmation-page__buttons-wrapper {
+  grid-area: buttons;
+  display: flex;
+  flex-direction: column;
+}
+
+.confirmation-page__pay-button {
+  margin-top: 32px;
+  padding: 12px 6px;
+  border-radius: 6px;
+
+  border: none;
+  background-color: #4E8EB2;
+
+  background: linear-gradient(90deg, rgba(48,129,172,1) 0%, rgb(65, 151, 190) 100%);
+  color: #ABD0E3;
+  font-size: 24px;
+  letter-spacing: 1px;
+
+  transition: background-color 0.2s ease-in-out;
+}
+
+.confirmation-page__pay-button:hover {
+  background-color: #447d9e;
+  cursor: pointer;
+}
+
+.confirmation-page__pay-button:active {
+  background-color: #3f7492;
+}
+
+.pay-button__total-sum {
+  color: #eaeaeb;
+  font-weight: 500;
+}

@@ -1,0 +1,138 @@
+.payment-modal__shipping-details {
+  height: 100%;
+  width: 100%;
+  padding: 3vh 2.5vw;
+
+  display: grid;
+ 
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 75px 393px auto;
+  grid-template-areas:
+  ".          right-column"
+  "left-colum right-column"
+  ".          right-column";
+}
+
+.shipping-details__left-column {
+  grid-area: left-colum;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.shipping-details__left-image {
+  height: 100%;
+  padding-right: 5vw;
+}
+
+.shipping-details__right-column {
+  grid-area: right-column;
+
+  font-family: "Roboto";
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.shipping-details__input-info {
+  display: grid;
+  grid-template-rows: 75px 393px auto;
+  grid-template-areas: 
+  "title"
+  "inputs"
+  "buttons";
+}
+
+.shipping-details__title-wrapper {
+  grid-area: title;
+  display: flex;
+  flex-direction: column;
+}
+
+.shipping-details__title {
+  font-size: 38px;
+  font-weight: 500;
+  letter-spacing: 1.2px;
+}
+
+.shipping-details__inputs-wrapper {
+  grid-area: inputs;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.shipping-details__input-form {
+  position: relative;
+  color: #d3d3d3;
+  font-size: 20px;
+}
+
+.shipping-details__label {
+  display: block;
+  /* margin-top: 4px; */
+}
+
+.shipping-details__input-info input,
+.shipping-details__select-country {
+  height: 52px;
+  border: none;
+  background-color: #f4f5f7;
+  outline: none;
+  position: relative;
+  width: 100%;
+  font-size: 26px;
+  line-height: 44px;
+}
+
+.shipping-details__input-info input::placeholder,
+.shipping-details__select-placeholder {
+  line-height: 44px;
+  font-size: 26px;
+  color: #bbbbbb;
+}
+
+.shipping-details__select-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.shipping-details__select-placeholder {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.shipping-details__bottom-line {
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  border-radius: 2px;
+  border-bottom: 2px solid #dfdfdf;
+
+  transition: border-bottom-color 0.2s ease-in-out;
+}
+
+.shipping-details__input-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.shipping-details__house-number-wrapper,
+.shipping-details__apartment-number--wrapper {
+  width: 45%;
+}
+
+.shipping-details__buttons-wrapper {
+  grid-area: buttons;
+  display: flex;
+  flex-direction: column;
+}
+
+.shipping-details__next-page-button {
+  margin-top: 32px;
+}

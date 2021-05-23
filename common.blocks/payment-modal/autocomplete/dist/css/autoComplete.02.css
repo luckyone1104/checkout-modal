@@ -1,0 +1,119 @@
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+}
+
+.autoComplete_wrapper {
+  position: relative;
+  display: inline-block;
+  width: 360px;
+
+  font-family: "Roboto";
+}
+
+#autoComplete {
+  width: 100%;
+  height: 52px;
+  /* padding-left: 10px; */
+  font-size: 26px;
+  line-height: 44px;
+  /* color: rgb(116, 116, 116); */
+  /* background-color: #f4f5f7; */
+  border: none;
+  outline: none;
+}
+
+#autoComplete::placeholder {
+  line-height: 44px;
+  font-size: 26px;
+  color: #bbbbbb;
+  transition: all 0.3s ease;
+}
+
+#autoComplete_list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  padding: 0;
+  margin: 0;
+  background-color: #fff;
+  border-bottom: 1px solid rgba(33, 33, 33, 0.1);
+  z-index: 1000;
+  outline: none;
+  line-height: 44px;
+}
+
+.autoComplete_result {
+  padding: 0 22px;
+  list-style: none;
+  text-align: left;
+  font-size: 18px;
+  color: #d4d4d4;
+  transition: all 0.1s ease-in-out;
+  background-color: rgba(255, 255, 255, 1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.2s ease;
+  line-height: 60px;
+}
+
+
+.autoComplete_result::selection {
+  color: rgba(#ffffff, 0);
+  background-color: rgba(#ffffff, 0);
+}
+
+.autoComplete_result:hover {
+  cursor: pointer;
+}
+
+.autoComplete_highlighted {
+  color: #bdbdbd;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.autoComplete_highlighted::selection {
+  color: rgba(#ffffff, 0);
+  background-color: rgba(#ffffff, 0);
+}
+
+.autoComplete_selected {
+  cursor: pointer;
+  background-color: rgba(123, 123, 123, 0.1);
+}
+
+@media only screen and (max-width: 600px) {
+  .autoComplete_wrapper {
+    width: 320px;
+  }
+
+  #autoComplete {
+    width: 18rem;
+    background-size: 1.6rem;
+    background-position: left 1.1rem top 0.75rem;
+  }
+
+  #autoComplete_list {
+    margin: 5px;
+  }
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  #autoComplete {
+    border-width: 1px;
+  }
+}
+
+@-moz-document url-prefix() {
+  #autoComplete {
+    background-size: 1.2rem;
+    background-origin: border-box;
+    border-width: 1px;
+    background-position: left 1.1rem top 0.8rem;
+  }
+}

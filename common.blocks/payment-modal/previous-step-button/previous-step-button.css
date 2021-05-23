@@ -1,0 +1,32 @@
+.previous-page-button {
+  padding: 12px 32px;
+  border-radius: 6px;
+  border: none;
+
+  
+  background: none;
+
+  font-size: 14px;
+  
+  
+
+  transition: background-color 0.2s ease-in-out;
+}
+
+.previous-page-button:hover {
+  cursor: pointer;
+}
+
+.previous-page-button:active {
+}
+
+.previous-page-button__title {
+  color: #ABD0E3;
+  font-weight: 400;
+
+  transition: color 0.2s ease-in-out;
+}
+
+.previous-page-button__title:hover {
+  color: #5f99bb;
+}

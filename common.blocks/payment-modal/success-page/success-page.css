@@ -1,0 +1,14 @@
+.payment-modal__success-page {
+  height: 100%;
+  width: 100%;
+}
+
+.success-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.success-page__svg-icon {
+  width: 50%;
+}

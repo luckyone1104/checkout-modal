@@ -1,0 +1,46 @@
+.next-page-button {
+  padding: 12px 32px;
+  border-radius: 6px;
+  border: none;
+
+  background-color: #4E8EB2;
+  background: linear-gradient(90deg, #3081ac 0%, #4197be 100%);
+  color: #ABD0E3;
+
+  font-size: 24px;
+  letter-spacing: 1px;
+
+  transform: scale(1);
+
+  transition: all 0.2s ease-in-out;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.next-page-button:hover {
+  background-color: #447d9e;
+  cursor: pointer;
+  transform: scale(1.03);
+}
+
+.next-page-button:active {
+  background-color: #3f7492;
+  transform: scale(1.03);
+}
+
+.next-page-button__title {
+  color: #eaeaeb;
+  font-weight: 300;
+}
+
+.next-page-button_disabled {
+  cursor: default;
+  transform: scale(1);
+}
+
+.next-page-button_disabled:hover {
+  transform: scale(1);
+}
