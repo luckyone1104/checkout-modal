@@ -27,8 +27,8 @@
         <ul class="payment-modal__menu">
           <li class="payment-modal__menu-element payment-modal__menu-element_selected  menu-element__order-page">YOUR ORDER</li>
           <li class="payment-modal__menu-element menu-element__shipping-details">SHIPPING DETAILS</li>
-          <li class="payment-modal__menu-element menu-element__payment-details menu-element_disabled">PAYMENT DETAILS</li>
-          <li class="payment-modal__menu-element menu-element__confirmation-page menu-element_disabled">CONFIRMATION</li>
+          <li class="payment-modal__menu-element menu-element__payment-details">PAYMENT DETAILS</li>
+          <li class="payment-modal__menu-element menu-element__confirmation-page">CONFIRMATION</li>
         </ul>
         <div class="payment-modal__menu-selected-line-wrapper">
           <div class="payment-modal__menu-selected-line"></div>
@@ -128,7 +128,7 @@
   
             <div class="shipping-details__inputs-wrapper">
               <div class="shipping-details__input-form">
-                <label class="shipping-details__label" for="">Country *</label>
+                <label class="shipping-details__label" >Country *</label>
                 <div class="shipping-details__select-wrapper">
                   <div class="shipping-details__select-placeholder">Zimbabwe</div>
                   <select class="shipping-details__select-country validationSensitive" name="countries" id="countries" placeholder="Zimbabwe">
@@ -139,29 +139,29 @@
               </div>
 
               <div class="autoComplete_wrapper">
-                <label class="shipping-details__label shipping-details__input-form" for="">City *</label>
+                <label class="shipping-details__label shipping-details__input-form">City *</label>
                 <div class="shipping-details__city-input-wrapper">
-                  <input class="checkout-input cityInput defaultCityInput validationSensitive" id="" type="text" maxlength="19" placeholder="Harare">
+                  <input class="checkout-input cityInput defaultCityInput validationSensitive"  type="text" maxlength="19" placeholder="Harare" filter="onlyLetters">
                   <div class="shipping-details__bottom-line"></div>
                 </div>
               </div>
   
               <div class="shipping-details__input-form">
-                <label class="shipping-details__label" for="">Street *</label>
-                <input class="checkout-input validationSensitive" id="" type="text" maxlength="19" placeholder="Independence Str">
+                <label class="shipping-details__label" >Street *</label>
+                <input class="checkout-input validationSensitive"  type="text" maxlength="19" placeholder="Independence Str">
                 <div class="shipping-details__bottom-line"></div>
               </div>
   
               <div class="shipping-details__input-row">
                 <div class="shipping-details__input-form shipping-details__house-number-wrapper">
-                  <label class="shipping-details__label" for="">House *</label>
-                  <input class="checkout-input validationSensitive" id="" type="text" maxlength="8" placeholder="23">
+                  <label class="shipping-details__label" >House *</label>
+                  <input class="checkout-input validationSensitive"  type="text" maxlength="8" placeholder="23">
                   <div class="shipping-details__bottom-line"></div>
                 </div>
   
                 <div class="shipping-details__input-form shipping-details__apartment-number--wrapper">
-                  <label class="shipping-details__label" for="">Apartment</label>
-                  <input class="checkout-input" type="text" id="" maxlength="8" placeholder="201">
+                  <label class="shipping-details__label" >Apartment</label>
+                  <input class="checkout-input" type="text"  maxlength="8" placeholder="201">
                   <div class="shipping-details__bottom-line"></div>
                 </div>
               </div>
@@ -199,16 +199,16 @@
 
             <div class="credit_card__third-row">
               <div class="credit-card__card-number card-number">      
-                <span>0000</span>
-                <span>0000</span>
-                <span>0000</span>
-                <span>0000</span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
               </div>
             </div>
 
             <div class="credit-card__fourth-row">
-              <div class="credit-card__card-holder-name card-holder-name">ARJUN KUNWAR</div>
-              <div class="credit-card__card-expiry-date expiry-date">09/20</div>
+              <div class="credit-card__card-holder-name card-holder-name"></div>
+              <div class="credit-card__card-expiry-date expiry-date"></div>
             </div>
           </div>
         </div>
@@ -222,23 +222,23 @@
             <div class="payment-details__inputs-wrapper">
               <div class="payment-details__input-form">
                 <label class="payment-details__label" for="name-on-card">Name on card *</label>
-                <input class="payment-details__name-on-card checkout-input validationSensitive" id="name-on-card" type="text" maxlength="19" placeholder="Arjun Kunwar">
+                <input class="payment-details__name-on-card checkout-input validationSensitive" id="name-on-card" type="text" maxlength="19" placeholder="Arjun Kunwar" filter="onlyLetters">
                 <div class="payment-details__bottom-line"></div>
               </div>
               <div class="payment-details__input-form">
                 <label class="payment-details__label" for="card-number">Card Number *</label>
-                <input class="payment-details__card-number checkout-input validationSensitive" id="card-number" type="text" minlength="19" maxlength="19" placeholder="5465 3232 4152 5931">
+                <input class="payment-details__card-number checkout-input validationSensitive" id="card-number" type="text" minlength="19" maxlength="19" placeholder="5465 3232 4152 5931" filter="onlyNumbers">
                 <div class="payment-details__bottom-line"></div>
               </div>
               <div class="payment-details__input-row">
                 <div class="payment-details__input-form payment-details__valid-through-wrapper">
                   <label class="payment-details__label" for="valid-through">Valid Through *</label>
-                  <input class="payment-details__valid-through checkout-input validationSensitive" id="valid-through" type="text" minlength="5" maxlength="5" placeholder="02/24">
+                  <input class="payment-details__valid-through checkout-input validationSensitive" id="valid-through" type="text" minlength="5" maxlength="5" placeholder="02/24" filter="onlyNumbers">
                   <div class="payment-details__bottom-line"></div>
                 </div>
                 <div class="payment-details__input-form payment-details__cvv-wrapper">
                   <label class="payment-details__label" for="card-cvv">CVV *</label>
-                  <input class="payment-details__cvv checkout-input validationSensitive" type="text" id="card-cvv" minlength="3" maxlength="3" placeholder="512">
+                  <input class="payment-details__cvv checkout-input validationSensitive" type="text" id="card-cvv" minlength="3" maxlength="3" placeholder="512" filter="onlyNumbers">
                   <div class="payment-details__bottom-line"></div>
                 </div>
               </div> 
@@ -277,26 +277,26 @@
             <div class="confirmation-page__inputs-wrapper">
               <div class="confirmation-page__input-row">
                 <div class="confirmation-page__input-form confirmation-page__customer-name-wrapper">
-                  <label class="confirmation-page__label" for="">Name *</label>
-                  <input class="checkout-input validationSensitive" id="" type="text" maxlength="8" placeholder="Manuel">
+                  <label class="confirmation-page__label">Name *</label>
+                  <input class="checkout-input validationSensitive"  type="text" maxlength="8" placeholder="Manuel" filter="onlyLetters">
                   <div class="confirmation-page__bottom-line"></div>
                 </div>
         
                 <div class="confirmation-page__input-form confirmation-page__customer-surname-wrapper">
-                  <label class="confirmation-page__label" for="">Surname *</label>
-                  <input class="checkout-input validationSensitive" type="text" id="" maxlength="10" placeholder="Cornelien">
+                  <label class="confirmation-page__label">Surname *</label>
+                  <input class="checkout-input validationSensitive" type="text"  maxlength="10" placeholder="Cornelien" filter="onlyLetters">
                   <div class="confirmation-page__bottom-line"></div>
                 </div>
               </div>
               <div class="confirmation-page__input-form">
-                <label class="confirmation-page__label" for="">E-Mail *</label>
-                <input class="checkout-input validationSensitive" id="" type="text" maxlength="24" placeholder="manuel-corniel@mail.com">
+                <label class="confirmation-page__label" >E-Mail *</label>
+                <input class="checkout-input validationSensitive"  type="text" maxlength="24" placeholder="manuel-corniel@mail.com">
                 <div class="confirmation-page__bottom-line"></div>
               </div>
         
               <div class="confirmation-page__input-form">
-                <label class="confirmation-page__label" for="">Phone Number *</label>
-                <input class="checkout-input validationSensitive" id="" type="text" maxlength="15" placeholder="312-412-34-76">
+                <label class="confirmation-page__label">Phone Number *</label>
+                <input class="checkout-input validationSensitive" type="text" maxlength="15" placeholder="312-412-34-76" filter="onlyNumbers">
                 <div class="confirmation-page__bottom-line"></div>
               </div>
             </div>
@@ -374,6 +374,7 @@
   
   <script src="common.blocks/payment-modal/autocomplete/dist/js/autoComplete.js"></script>
   <script src="common.blocks/payment-modal/autocomplete/auto-complete-objects.js"></script>
+  <script type="module" src="common.blocks/payment-modal/js/index.js"></script>
 </body>
 </html>
 

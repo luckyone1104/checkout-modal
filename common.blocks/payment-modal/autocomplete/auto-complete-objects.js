@@ -21,7 +21,7 @@ function initCityAutoComplete() {
     placeHolder: "Kyiv",
     threshold: 3,
     data: {
-      src: ["Sauce - Thousand Island", "Sauce2 - Thousand Island", "Wild Boar - Tenderloin", "Goat - Whole Cut"],
+      src: [],
     },
     resultItem: {
       highlight: {

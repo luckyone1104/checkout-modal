@@ -50,13 +50,13 @@ function paymentModalController() {
   initGlobalVariables();
 
   // *** 2.2 Invoking Page Functions ***
-  findVisiblePage();
-  changeTotalSum();
-  fillCountriesSelectBoxHtml();
+  // findVisiblePage();
+  // changeTotalSum();
+  // fillCountriesSelectBoxHtml();
   creditCardInteractionsController();
   
   // *** 2.3 Event Listeners Initialization ***
-  initEventListeners();
+  // initEventListeners();
 }
 
 // III. PAYMENT MODAL FUNCTIONS
@@ -229,6 +229,7 @@ function isValidatableForPageSwitching(nextPageButton) {
       if ((input.value === '') || (inputMinLength && (input.value.length !== inputMinLength))) {
         isValid = false;
         // In case bottom line is not placed right after an input, but is located in a wrapper
+        // Try to use CLOSEST
         input.nextElementSibling ? input.nextElementSibling.style.borderBottomColor = '#ff6666' : input.parentNode.nextElementSibling.style.borderBottomColor = '#ff6666';
       }
     }
