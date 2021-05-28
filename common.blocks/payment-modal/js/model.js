@@ -1,64 +1,63 @@
 export class Model {
-  constructor(citiesUrl, utils) {
-    this.citiesUrl = citiesUrl;
-    this.utils = utils;
-    this.data = {};
+  constructor() {
+    this.citiesUrl = 'https://api.visicom.ua/data-api/4.0/en/search/adm_settlement.json?&c=ua&key=eb75e86ee245c07d002a84b413e84dc2';
+    this.firebaseConfig = {
+      apiKey: "AIzaSyBEyr9GBrH9cKj0qYu-2v55DLzkIyDNZu4",
+      authDomain: "checkout-modal-4a540.firebaseapp.com",
+      databaseURL: "https://checkout-modal-4a540-default-rtdb.firebaseio.com",
+      projectId: "checkout-modal-4a540",
+      storageBucket: "checkout-modal-4a540.appspot.com",
+      messagingSenderId: "499882402690",
+      appId: "1:499882402690:web:1c2e1715d7fbbc66f8e59b"
+    };
+    this.ready = false;
   }
 
-  async getData() {
-    await this.getUkrainiansCities()
-      .then(citiesData => {
-        this.data.ukrainianCities = citiesData;
-      });
-
-    this.data.countries = this.getCountries();
-
-    this.data.cardName = this.getCardDefaultName();
-    this.data.cardNumber = this.getCardDefaultNumber();
-    this.data.cardExpityDate = this.getCardDefaultExpiryDate();    
-
-    this.modifyData();
-
-    return this.data;
+  isReady() {
+    return this.ready;
   }
 
-  modifyData() {
-    this.data.countries = this.utils.createHTMLOptions(this.data.countries);
+  init() {
+    firebase.initializeApp(this.firebaseConfig);
+    this.database = firebase.database();
+    this.ready = true;
 
-    let modifiedCardNumber = this.data.cardNumber.split(' ');
-    this.data.cardNumber = modifiedCardNumber;
+    // firebase.database().ref('ukrainianCities').set(['1', '2']);
   }
 
-  getCountries() {
-    return ['Ukraine','Poland', 'Czech Republic', 'Romania'];
+  async getData() {  
+    const data = await this.queryData();
+
+    this.modifyData(data);
+
+    return data;
   }
 
-  getCardDefaultName() {
-    return 'ARJUN KUNWAR';
+  queryData() {
+    return this.database.ref().get().then((snapshot) => {
+      if (snapshot.exists()) {
+        return snapshot.val();
+      } else {
+        console.log("No data available");
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
   }
 
-  getCardDefaultNumber() {
-    return '0000 0000 0000 0000';
+  modifyData(data) {
+    data.countries = this.createHTMLOptions(data.countries);
+
+    let modifiedCardNumber = data.creditCardDefaults.number.split(' ');
+    data.creditCardDefaults.number = modifiedCardNumber;
   }
 
-  getCardDefaultExpiryDate() {
-    return '09/23';
-  }
-
-  getUkrainiansCities() {
-    return fetch(this.citiesUrl)
-      .then(responce => (responce.ok) ? responce.json() : Promise.reject(responce))
-      .then(data => {
-        this.citiesData = [];
-        data.features.forEach(obj => {
-          this.citiesData.push(obj.properties.name);
-        });
-        return this.citiesData;
-      })
-      .catch(err => {
-        console.error('Couldn\'t get Ukrainian cities from the server!');
-        return null;
-      })  
+  createHTMLOptions(optionsArray) {
+    let result = '';
+    optionsArray.forEach(option => {
+      result += `<option value="${option}">${option}</option>\n`;
+    });
+    return result;
   }
 
   isValid(inputsForValidation) {
@@ -114,6 +113,25 @@ export class Model {
     }
   
     return stringWithSpaces;
+  }
+
+  putSlashBetweenDates(filteredString) {
+    if (!filteredString) return null;
+  
+    let positionInString = 0;
+    let stringWithSlash = '';  
+  
+    for (let i = positionInString; i < filteredString.length; i++) {
+      if (positionInString == 2) {
+        stringWithSlash += '/';
+        positionInString++;
+      }
+  
+      stringWithSlash += filteredString[i];
+      positionInString++;
+    }
+  
+    return stringWithSlash;
   }
 
   isEmailValid(stringToFilter) {

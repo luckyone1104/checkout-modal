@@ -19,19 +19,19 @@ function changeInputBottomLineStyleAfterSelect(selectBox) {
 }
 
 function whenSelectedCountryIsUkraine() {
-  // citiesInputWrapper.firstElementChild.remove();
-  // const inputFragment = `<input class="ukrainianCityAutoComplete autoComplete checkout-input cityInput validationSensitive" 
-  // type="search" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off" id="autoComplete">`;
-  // citiesInputWrapper.insertAdjacentHTML('afterBegin', inputFragment);
-  // initCityAutoComplete();
-  // countryAutoComplete.data.src = ukrainianCities;
-  // changeInputBottomLineStyle(citiesInputWrapper.firstChild);
+  citiesInputWrapper.firstElementChild.remove();
+  const inputFragment = `<input class="ukrainianCityAutoComplete autoComplete checkout-input cityInput validationSensitive" 
+  type="search" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off" id="autoComplete">`;
+  citiesInputWrapper.insertAdjacentHTML('afterBegin', inputFragment);
+  initCityAutoComplete();
+  countryAutoComplete.data.src = ukrainianCities;
+  changeInputBottomLineStyle(citiesInputWrapper.firstChild);
 }
 
 function whenSelectedCountryIsOtherThanUkraine() {
-  // citiesInputWrapper.firstElementChild.remove();
-  // const inputFragment = `<input class="checkout-input cityInput defaultCityInput validationSensitive"  
-  // type="text" maxlength="19" placeholder="Harare">`;
-  // citiesInputWrapper.insertAdjacentHTML('afterBegin', inputFragment);
-  // changeInputBottomLineStyle(citiesInputWrapper.firstChild);
+  citiesInputWrapper.firstElementChild.remove();
+  const inputFragment = `<input class="checkout-input cityInput defaultCityInput validationSensitive"  
+  type="text" maxlength="19" placeholder="Harare">`;
+  citiesInputWrapper.insertAdjacentHTML('afterBegin', inputFragment);
+  changeInputBottomLineStyle(citiesInputWrapper.firstChild);
 }

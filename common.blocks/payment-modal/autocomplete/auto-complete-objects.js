@@ -2,18 +2,18 @@
 let ukrainianCities;
 let countryAutoComplete;
 
-fetch('https://api.visicom.ua/data-api/4.0/en/search/adm_settlement.json?&c=ua&key=eb75e86ee245c07d002a84b413e84dc2')
-  .then((response) => {
-    return response.json();
-  })
-  .then((data) => {
-    const citiesData = [];
-    data.features.forEach(obj => {
-      citiesData.push(obj.properties.name);
-    });
+// fetch('https://api.visicom.ua/data-api/4.0/en/search/adm_settlement.json?&c=ua&key=eb75e86ee245c07d002a84b413e84dc2')
+//   .then((response) => {
+//     return response.json();
+//   })
+//   .then((data) => {
+//     const citiesData = [];
+//     data.features.forEach(obj => {
+//       citiesData.push(obj.properties.name);
+//     });
 
-    ukrainianCities = [...citiesData];
-  });
+//     ukrainianCities = [...citiesData];
+//   });
 
 function initCityAutoComplete() {
   countryAutoComplete = new autoComplete({

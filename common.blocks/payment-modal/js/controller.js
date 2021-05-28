@@ -1,21 +1,27 @@
 export class Controller {
 
-  constructor(model, view, utils, observers) {
+  constructor(model, view, observers) {
     this.model = model;
     this.view = view;
-    this.utils = utils;
     this.observers = observers;
   }
 
   init() {
+    this.initModel();
     this.model.getData()
       .then(data => {
         this.initView(data);
-      })
-      .then(() => {
         this.bindEvents();
         this.bindSubscribers();
       })
+  }
+
+  initModel() {
+    this.model.isReady() || this.model.init();
+  }
+
+  initView(data) {
+    this.view.isReady() || this.view.init(data);
   }
 
   bindEvents() {
@@ -25,7 +31,7 @@ export class Controller {
       }
       
       let nextPageIndex = this.view.DOMElements.menuButtons.indexOf(event.target);
-      this.observers.switchingPages.callEvent(nextPageIndex);
+      this.observers.clickOnPagingButton.callEvent(nextPageIndex);
     })
 
     this.view.DOMElements.nextPageButtons.forEach(nextButton => {
@@ -35,14 +41,15 @@ export class Controller {
         }
 
         let isValid = this.model.isValid(this.view.getPageInputs());
-        if (isValid.status) {
-          let nextPageIndex = +this.utils.getKeyByValue(this.view.DOMElements.nextPageButtons, nextButton) + 1;
 
-          this.observers.switchingPages.callEvent(nextPageIndex);
+        if (isValid.status) {
+          let nextPageIndex = +this.getKeyByValue(this.view.DOMElements.nextPageButtons, nextButton) + 1;
+
+          this.observers.clickOnPagingButton.callEvent(nextPageIndex);
         } 
         else {
           for (let input of isValid.inputs) {
-            this.observers.invalidForm.callEvent(input);
+            this.observers.failValidation.callEvent(input);
           }
         }
         
@@ -51,15 +58,15 @@ export class Controller {
 
     this.view.DOMElements.previousPageButtons.forEach(previousButton => {
       previousButton.addEventListener('click', () => {
-        let nextPageIndex = +this.utils.getKeyByValue(this.view.DOMElements.previousPageButtons, previousButton);
+        let nextPageIndex = +this.getKeyByValue(this.view.DOMElements.previousPageButtons, previousButton);
 
-        this.observers.switchingPages.callEvent(nextPageIndex);
+        this.observers.clickOnPagingButton.callEvent(nextPageIndex);
       })
     });
 
     this.view.DOMElements.productRemoveButtons.forEach(removeButton => {
       removeButton.addEventListener('click', () => {
-        this.observers.removingProduct.callEvent(removeButton);
+        this.observers.clickOnRemoveProduct.callEvent(removeButton);
       })
     });
 
@@ -68,7 +75,7 @@ export class Controller {
     });
 
     this.view.DOMElements.selectBox.addEventListener('change', () => {
-      this.observers.selectBoxChange.callEvent();
+      this.observers.changeOfSelectBox.callEvent();
     });
 
     window.addEventListener('resize', () => {
@@ -79,26 +86,56 @@ export class Controller {
 
     inputsForFilter.onlyNumbers.forEach(input => {
       input.addEventListener('input', () => {
-        console.log('onlyNumbers!');
-        this.observers.inputNumberFilter.callEvent(input.value);
+        let filteredInput = this.model.filterOnlyNumbers(input.value);
+
+        // input.value = filteredInput;
+
+        this.view.setInputValue(input, filteredInput);
       })
     });
 
     inputsForFilter.onlyLetters.forEach(input => {
       input.addEventListener('input', () => {
-        console.log('onlyLetters');
-        this.observers.inpuLetterFilter.callEvent(input.value);
+        let filteredInput = this.model.filterLettersAndSpaces(input.value);
+
+        // input.value = filteredInput;
+
+        this.view.setInputValue(input, filteredInput);
+
+        // this.observers.inpuLetterFilter.callEvent(input.value);
       })
     });
+
+    this.view.DOMElements.nameOnCardInput.addEventListener('input', event => {
+      this.view.writeCardHolderName(event.currentTarget.value.toUpperCase());
+    })
+
+    this.view.DOMElements.cardNumberInput.addEventListener('input', event => {
+      this.view.chooseVisaOrMasterCardLogo(event.currentTarget.value);
+      
+      this.view.setInputValue(event.currentTarget, this.model.putSpacesInCreditCardNumber(event.currentTarget.value))
+
+      this.view.writeCreditCardNumber(event.currentTarget.value);
+
+      if (event.currentTarget.value === "") {
+        this.view.buildDefaultCardNumber();
+      }
+    })
+
+    this.view.DOMElements.validThroughInput.addEventListener('input', event => {
+      this.view.setInputValue(event.currentTarget, this.model.putSlashBetweenDates(event.currentTarget.value));
+
+      this.view.writeExpiryDate(event.currentTarget.value);
+    })
   }
 
   createInputEvent(input) {
     input.addEventListener('focus', () => {
-      this.observers.inputFocus.callEvent(input);
+      this.observers.focusOnInput.callEvent(input);
     });
 
     input.addEventListener('blur', () => {
-      this.observers.inputBlur.callEvent(input);
+      this.observers.blurOfInput.callEvent(input);
     })
   }
 
@@ -107,31 +144,29 @@ export class Controller {
   }
 
   bindSubscribers() {
-    this.observers.switchingPages.subscribeEvent(this.view.switchPage.bind(this.view));
-    this.observers.switchingPages.subscribeEvent(this.view.removeMenuElementSelectedStyle.bind(this.view));
-    this.observers.switchingPages.subscribeEvent(this.view.addMenuElementSelectedStyle.bind(this.view));
-    this.observers.switchingPages.subscribeEvent(this.view.moveMenuSelectedLine.bind(this.view));
-    this.observers.switchingPages.subscribeEvent(this.view.unlockDisabledButton.bind(this.view));
+    this.observers.clickOnPagingButton.subscribeEvent(this.view.switchPage.bind(this.view));
+    this.observers.clickOnPagingButton.subscribeEvent(this.view.removeMenuElementSelectedStyle.bind(this.view));
+    this.observers.clickOnPagingButton.subscribeEvent(this.view.addMenuElementSelectedStyle.bind(this.view));
+    this.observers.clickOnPagingButton.subscribeEvent(this.view.moveMenuSelectedLine.bind(this.view));
+    this.observers.clickOnPagingButton.subscribeEvent(this.view.unlockDisabledButton.bind(this.view));
 
-    this.observers.invalidForm.subscribeEvent(this.view.colorInvalidBottomLine.bind(this.view));
+    this.observers.failValidation.subscribeEvent(this.view.colorInvalidBottomLine.bind(this.view));
 
-    this.observers.removingProduct.subscribeEvent(this.view.removeProduct.bind(this.view));
-    this.observers.removingProduct.subscribeEvent(this.view.getProductPrices.bind(this.view));
-    this.observers.removingProduct.subscribeEvent(this.view.setTotalSum.bind(this.view));
-    this.observers.removingProduct.subscribeEvent(this.view.clearOrderPage.bind(this.view));
+    this.observers.clickOnRemoveProduct.subscribeEvent(this.view.removeProduct.bind(this.view));
+    this.observers.clickOnRemoveProduct.subscribeEvent(this.view.getProductPrices.bind(this.view));
+    this.observers.clickOnRemoveProduct.subscribeEvent(this.view.setTotalSum.bind(this.view));
+    this.observers.clickOnRemoveProduct.subscribeEvent(this.view.clearOrderPage.bind(this.view));
 
-    this.observers.inputFocus.subscribeEvent(this.view.changeInputBottomLineStyleOnFocus.bind(this.view));
-    this.observers.inputBlur.subscribeEvent(this.view.changeInputBottomLineStyleOnBlur.bind(this.view));
+    this.observers.focusOnInput.subscribeEvent(this.view.changeInputBottomLineStyleOnFocus.bind(this.view));
+    this.observers.blurOfInput.subscribeEvent(this.view.changeInputBottomLineStyleOnBlur.bind(this.view));
 
-    this.observers.selectBoxChange.subscribeEvent(this.view.hideSelectBoxPlaceHolder.bind(this.view));
-    this.observers.selectBoxChange.subscribeEvent(this.view.changeSelectBoxBottomLine.bind(this.view));
-    this.observers.selectBoxChange.subscribeEvent(this.view.changeCitiesInput.bind(this.view));
-    this.observers.selectBoxChange.subscribeEvent(this.resetCitiesInputEventListener.bind(this));
-
-    this.observers.inputNumberFilter.subscribeEvent(this.model.filterOnlyNumbers.bind(this.model));
+    this.observers.changeOfSelectBox.subscribeEvent(this.view.hideSelectBoxPlaceHolder.bind(this.view));
+    this.observers.changeOfSelectBox.subscribeEvent(this.view.changeSelectBoxBottomLine.bind(this.view));
+    this.observers.changeOfSelectBox.subscribeEvent(this.view.changeCitiesInput.bind(this.view));
+    this.observers.changeOfSelectBox.subscribeEvent(this.resetCitiesInputEventListener.bind(this));
   }
 
-  initView(data) {
-    this.view.isReady() || this.view.init(data);
+  getKeyByValue(object, value) {
+    return Object.keys(object).find(key => object[key] === value);
   }
 }

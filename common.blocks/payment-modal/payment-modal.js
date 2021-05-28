@@ -18,7 +18,7 @@
 
 // *** Payment Modal Module Initialization ***
 window.onload = function() {
-  paymentModalController();
+  // paymentModalController();
 };
 
 // I. CREATING GLOBAL DOM VARIABLES 
@@ -50,13 +50,13 @@ function paymentModalController() {
   initGlobalVariables();
 
   // *** 2.2 Invoking Page Functions ***
-  // findVisiblePage();
-  // changeTotalSum();
-  // fillCountriesSelectBoxHtml();
+  findVisiblePage();
+  changeTotalSum();
+  fillCountriesSelectBoxHtml();
   creditCardInteractionsController();
   
   // *** 2.3 Event Listeners Initialization ***
-  // initEventListeners();
+  initEventListeners();
 }
 
 // III. PAYMENT MODAL FUNCTIONS

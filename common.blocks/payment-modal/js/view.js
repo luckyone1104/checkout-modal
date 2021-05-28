@@ -4,11 +4,16 @@ export class View {
     this.ready = false;
   }
 
+  isReady() {
+    return this.ready;
+  }
+
   init(data) {
     this.getDOMElements();
-    this.getData(data);
-    this.setTotalSum();
+    this.saveData(data);
     this.buildView();
+
+    console.log('View initialization is finished!');
     this.ready = true;
   }
 
@@ -71,20 +76,22 @@ export class View {
   getProductPrices() {
     let productPrices = document.querySelectorAll('.order-page__price');
     this.DOMElements.productsPrices =  productPrices;
+
     return productPrices;
   }
 
-  getData(data) {
+  saveData(data) {
     this.ukrainianCities = data.ukrainianCities;
     this.countries = data.countries;
     this.cardDefaultValues = {
-      name   : data.cardName,
-      number : data.cardNumber,
-      expiry : data.cardExpityDate
+      name   : data.creditCardDefaults.name,
+      number : data.creditCardDefaults.number,
+      expiry : data.creditCardDefaults.expiryDate
     }
   }
 
   buildView() {
+    this.setTotalSum();
     this.buildSelectBox();
     // this.disableMenuButtons();
     this.buildCardDefaultValues()
@@ -95,17 +102,46 @@ export class View {
   }
 
   buildCardDefaultValues() {
-    this.DOMElements.cardHolderName.innerHTML = this.cardDefaultValues.name;
-    this.DOMElements.expiryDate.innerHTML = this.cardDefaultValues.expiry;
-    this.buildCardNumber();
+    this.buildDefaultCardHolderName();
+    this.buildDefaultExpiryDate();
+    this.buildDefaultCardNumber();
   }
 
-  buildCardNumber() {
+  buildDefaultCardHolderName() {
+    this.DOMElements.cardHolderName.innerHTML = this.cardDefaultValues.name;
+  }
+
+  buildDefaultExpiryDate() {
+    this.DOMElements.expiryDate.innerHTML = this.cardDefaultValues.expiry;
+  }
+
+  buildDefaultCardNumber() {
     let numberNests = this.DOMElements.cardNumber.querySelectorAll('span');
     
     numberNests.forEach((nest, index) => {
       nest.innerHTML = this.cardDefaultValues.number[index];
     });
+  }
+
+  buildCityAutoComplete() {
+    this.DOMElements.countryAutoComplete = new autoComplete({
+      selector: ".ukrainianCityAutoComplete",
+      placeHolder: "Kyiv",
+      threshold: 3,
+      data: {
+        src: [],
+      },
+      resultItem: {
+        highlight: {
+          render: true,
+        },
+      },
+      onSelection: (feedback) => {
+        document.querySelector(this.DOMElements.countryAutoComplete.selector).value = feedback.selection.value;
+      },
+    });
+  
+    autoCompleteHover(); //Inject into library
   }
 
   disableMenuButtons() {
@@ -162,15 +198,17 @@ export class View {
   changeCitiesInput() {
     let selectBox = this.DOMElements.selectBox;
 
-    if (selectBox.value === 'Ukraine') {
+    if (selectBox.value === 'Ukraine' && document.querySelector('.defaultCityInput')) {
       this.whenSelectedCountryIsUkraine(selectBox);
     }
-    if (selectBox.value !== 'Ukraine') {
+    if (selectBox.value !== 'Ukraine' && document.querySelector('.ukrainianCityAutoComplete')) {
       this.whenSelectedCountryIsOtherThanUkraine();
     }
   }
 
   whenSelectedCountryIsUkraine() {
+    if (!this.ukrainianCities) return null;
+
     const citiesInputWrapper = this.DOMElements.citiesInputWrapper;
     
     citiesInputWrapper.firstElementChild.remove();
@@ -178,9 +216,8 @@ export class View {
     type="search" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off" id="autoComplete" filter="onlyLetters">`;
     citiesInputWrapper.insertAdjacentHTML('afterBegin', inputFragment);
 
-    // Second Subscriber
-    initCityAutoComplete();
-    countryAutoComplete.data.src = ukrainianCities;
+    this.buildCityAutoComplete();
+    this.DOMElements.countryAutoComplete.data.src = this.ukrainianCities;
   }
 
   whenSelectedCountryIsOtherThanUkraine() {
@@ -206,6 +243,8 @@ export class View {
   }
 
   switchPage(nextPageIndex) {
+    if (nextPageIndex === -1) return 0;
+    
     let nextPage = this.DOMElements.pagesList[nextPageIndex];
 
     this.getCurrentPage().style.display = 'none';
@@ -218,12 +257,6 @@ export class View {
     }
     return false;
   }
-
-  /*
-  
-  inputs for Validation 
-
-  */
 
   getPageInputs() {
     return this.getCurrentPage().querySelectorAll('.validationSensitive');
@@ -246,16 +279,16 @@ export class View {
   moveMenuSelectedLine(nextPageIndex) {
     switch(nextPageIndex) {
       case 0:
-        menuSelectLine.style.left='0%';
+        this.DOMElements.menuLine.style.left='0%';
         break;
       case 1:
-        menuSelectLine.style.left='25%';
+        this.DOMElements.menuLine.style.left='25%';
         break;
       case 2:
-        menuSelectLine.style.left='50%';
+        this.DOMElements.menuLine.style.left='50%';
         break;
       case 3:
-        menuSelectLine.style.left='75%';
+        this.DOMElements.menuLine.style.left='75%';
         break;
     }
   }
@@ -305,7 +338,59 @@ export class View {
     return inputs;
   }
 
-  isReady() {
-    return this.ready;
+  writeCardHolderName(name) {
+    this.DOMElements.cardHolderName.innerHTML = name;
+  }
+
+  writeExpiryDate(date) {
+    this.DOMElements.validThroughInput.innerHTML = date;
+  }
+
+  writeCreditCardNumber(number) {
+    const eachFourNumbersOnCard = this.DOMElements.cardNumber.querySelectorAll('span');
+
+    let eachFourNumbersFromInput = number.split(' ');
+
+    for (let i = 0; i < eachFourNumbersOnCard.length; i++) {
+      eachFourNumbersOnCard[i].innerHTML = eachFourNumbersFromInput[i] ? eachFourNumbersFromInput[i] : '';
+    }
+  }
+
+  chooseVisaOrMasterCardLogo(filteredInput) {
+    const visaLogo = this.DOMElements.visaLogo;
+    const masterCardLogo = this.DOMElements.masterCardLogo;
+
+
+    if(this.isMasterCard(filteredInput, visaLogo, masterCardLogo)) {
+      this.showMasterCardLogo(visaLogo, masterCardLogo);
+      return 'MasterCard';
+    }
+    if(this.isVisa(filteredInput)) {
+      this.showVisaLogo(visaLogo, masterCardLogo);
+      return 'Visa';
+    }
+    return null;
+  }
+
+  isMasterCard(filteredInput) {
+    return filteredInput ? filteredInput[0] === '5' : null;
+  }
+
+  isVisa(filteredInput) {
+    return filteredInput ? filteredInput[0] === '4' : null;
+  }
+
+  showVisaLogo(visaLogo, masterCardLogo) {
+    masterCardLogo.style.display = 'none';
+    visaLogo.removeAttribute('style');
+  }
+
+  showMasterCardLogo(visaLogo, masterCardLogo) {
+    visaLogo.style.display = 'none';
+    masterCardLogo.removeAttribute('style');
+  }
+
+  setInputValue(input, value) {
+    input.value = value;
   }
 }
