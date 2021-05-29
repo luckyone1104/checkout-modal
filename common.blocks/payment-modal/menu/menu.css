@@ -29,6 +29,7 @@
 }
 
 .payment-modal__menu-element {
+  text-decoration: none;
   color: #B0C7CF;
   width: 25%;
   cursor: pointer;

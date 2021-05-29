@@ -1,6 +1,5 @@
 export class Model {
   constructor() {
-    this.citiesUrl = 'https://api.visicom.ua/data-api/4.0/en/search/adm_settlement.json?&c=ua&key=eb75e86ee245c07d002a84b413e84dc2';
     this.firebaseConfig = {
       apiKey: "AIzaSyBEyr9GBrH9cKj0qYu-2v55DLzkIyDNZu4",
       authDomain: "checkout-modal-4a540.firebaseapp.com",
@@ -10,6 +9,7 @@ export class Model {
       messagingSenderId: "499882402690",
       appId: "1:499882402690:web:1c2e1715d7fbbc66f8e59b"
     };
+    this.data = JSON.parse(sessionStorage.getItem('data')) || null;
     this.ready = false;
   }
 
@@ -17,20 +17,19 @@ export class Model {
     return this.ready;
   }
 
-  init() {
+  async init() {
     firebase.initializeApp(this.firebaseConfig);
     this.database = firebase.database();
+    this.data ? this.getData() : await this.getData();
     this.ready = true;
-
-    // firebase.database().ref('ukrainianCities').set(['1', '2']);
   }
 
   async getData() {  
-    const data = await this.queryData();
+    const serverData = await this.queryData();
+    this.modifyData(serverData);
+    this.updateData(serverData);
 
-    this.modifyData(data);
-
-    return data;
+    return this.data;
   }
 
   queryData() {
@@ -45,11 +44,17 @@ export class Model {
     });
   }
 
-  modifyData(data) {
-    data.countries = this.createHTMLOptions(data.countries);
+  modifyData(serverData) {
+    serverData.countries = this.createHTMLOptions(serverData.countries);
 
-    let modifiedCardNumber = data.creditCardDefaults.number.split(' ');
-    data.creditCardDefaults.number = modifiedCardNumber;
+    let modifiedCardNumber = serverData.creditCardDefaults.number.split(' ');
+    serverData.creditCardDefaults.number = modifiedCardNumber;
+  }
+
+  saveInputsData(currentPage, values) {
+    if (values && values.length > 0) {
+      sessionStorage.setItem(currentPage, JSON.stringify(values));
+    }
   }
 
   createHTMLOptions(optionsArray) {
@@ -58,6 +63,15 @@ export class Model {
       result += `<option value="${option}">${option}</option>\n`;
     });
     return result;
+  }
+
+  updateData(serverData) {
+    if (JSON.stringify(serverData) !== JSON.stringify(this.data)) {
+      console.log('Updating local data...')
+      sessionStorage.setItem('data', JSON.stringify(serverData));
+      this.data = JSON.parse(sessionStorage.getItem('data'));
+      // VIEW REBUILD MUST BE INVOKED
+    }
   }
 
   isValid(inputsForValidation) {
@@ -72,6 +86,7 @@ export class Model {
         isValid.inputs.push(input);
       }
     }
+
     return isValid;
   }
 

@@ -1,4 +1,7 @@
 .next-page-button {
+  text-decoration: none;
+  text-align: center;
+  
   padding: 12px 32px;
   border-radius: 6px;
   border: none;

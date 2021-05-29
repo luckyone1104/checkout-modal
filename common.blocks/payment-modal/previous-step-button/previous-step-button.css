@@ -1,4 +1,7 @@
 .previous-page-button {
+  text-decoration: none;
+  text-align: center;
+
   padding: 12px 32px;
   border-radius: 6px;
   border: none;
@@ -8,8 +11,6 @@
 
   font-size: 14px;
   
-  
-
   transition: background-color 0.2s ease-in-out;
 }
 
