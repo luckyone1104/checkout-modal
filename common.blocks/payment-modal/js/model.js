@@ -36,7 +36,7 @@ export class Model {
   }
 
   doesSessionDataExist() {
-    return sessionStorage.getItem('data') !== 'undefined' ? true : false;
+    return (sessionStorage.getItem('data') && sessionStorage.getItem('data') !== 'undefined') ? true : false;
   }
 
   setDataFromSessioinStorage() {
