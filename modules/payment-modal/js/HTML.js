@@ -82,7 +82,7 @@ export class HTML {
       shipping:
          `<div class="payment-modal__shipping-details shipping-details"">
             <div class="shipping-details__left-column">
-              <img class="shipping-details__left-image" src="common.blocks/payment-modal/shipping-details/truck.svg" alt="">
+              <img class="shipping-details__left-image" src="modules/payment-modal/css/shipping-details/truck.svg" alt="">
             </div>
 
             <div class="shipping-details__right-column">
@@ -154,14 +154,14 @@ export class HTML {
               <div class="payment-details__credit-card credit-card">
                 <div class="credit-card__first-row">
                   <div class="credit-card__payment-system-logo">
-                    <img class="master-card-logo" style="display:none;"  src="common.blocks/payment-modal/payment-details/master-card-logo.svg" alt="">
-                    <img class="visa-logo" src="common.blocks/payment-modal/payment-details/visa-logo.svg" alt="">
+                    <img class="master-card-logo" style="display:none;"  src="modules/payment-modal/css/payment-details/master-card-logo.svg" alt="">
+                    <img class="visa-logo" src="modules/payment-modal/css/payment-details/visa-logo.svg" alt="">
                   </div>
                 </div>
     
                 <div class="credit-card__second-row">
                   <div class="credit-card__bank-chip-image">
-                    <img class="card-chip" src="common.blocks/payment-modal/payment-details/credit-card-chip.svg" alt="">
+                    <img class="card-chip" src="modules/payment-modal/css/payment-details/credit-card-chip.svg" alt="">
                   </div>
                 </div>
     
@@ -201,7 +201,7 @@ export class HTML {
                   <div class="payment-details__input-row">
                     <div class="payment-details__input-form payment-details__valid-through-wrapper">
                       <label class="payment-details__label" for="valid-through">Valid Through *</label>
-                      <input class="payment-details__valid-through checkout-input validationSensitive sessionInput displayOnCard" id="valid-through" type="text" minlength="5" maxlength="5" placeholder="02/24" filter="onlyNumbers">
+                      <input class="payment-details__valid-through checkout-input validationSensitive sessionInput displayOnCard" id="valid-through" type="text" minlength="5" maxlength="5" placeholder="09/23" filter="onlyNumbers">
                       <div class="payment-details__bottom-line"></div>
                     </div>
                     <div class="payment-details__input-form payment-details__cvv-wrapper">
@@ -231,7 +231,7 @@ export class HTML {
       confirmation:
          `<div class="payment-modal__confirmation-page confirmation-page">
             <div class="confirmation-page__left-column">
-              <img class="confirmation-page__left-image" src="common.blocks/payment-modal/confirmation-page/confirmation.svg" alt="">
+              <img class="confirmation-page__left-image" src="modules/payment-modal/css/confirmation-page/confirmation.svg" alt="">
             </div>
     
             <div class="confirmation-page__right-column">
