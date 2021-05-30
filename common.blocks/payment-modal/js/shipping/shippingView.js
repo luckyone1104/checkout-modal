@@ -1,11 +1,8 @@
-export class ShippingView {
-  constructor() {
-    this.DOMElements = {};
-    this.ready = false;
-  }
+import {View} from '../view.js'
 
-  isReady() {
-    return this.ready;
+export class ShippingView extends View {
+  constructor() {
+    super();
   }
 
   init(data) {
@@ -38,51 +35,18 @@ export class ShippingView {
     this.DOMElements.selectBox.insertAdjacentHTML('beforeEnd', this.countries);
   }
 
-  buildInputValues() {
-    let currentPage = 1;
-    let inputs = this.getInputsForSessionStorage();
-    let values = JSON.parse(sessionStorage.getItem(currentPage));
-
-    if (!values) return null;
-
-    inputs.forEach((input, index) => {
-      if (values[index] !== 'undefined') {
-        input.value = values[index];
-      }
-    })
-
-    if (inputs[0].value !== '') {
-      this.hideSelectBoxPlaceHolder();
-    }
-  }
-
-  getInputsForSessionStorage() {
-    return document.querySelectorAll('.sessionInput');
-  }
-
   hideSelectBoxPlaceHolder() {
     this.DOMElements.selectBox.previousElementSibling.style.display = 'none';
   }
 
   showSelectBoxPlaceHolder() {
     if (this.DOMElements.selectBox.value === '') {
-      console.log('SHOW');
       this.DOMElements.selectBox.previousElementSibling.removeAttribute('style');
     }
   }
 
   changeSelectBoxBottomLine() {
     this.changeInputBottomLineStyleOnBlur(this.DOMElements.selectBox.parentNode);
-  }
-
-  changeInputBottomLineStyleOnFocus(input) {
-    let inputBottomLine = input.nextElementSibling;
-    inputBottomLine.style.borderBottomColor = "#71b1ce";
-  }
-
-  changeInputBottomLineStyleOnBlur(input) {
-    let inputBottomLine = input.nextElementSibling;
-    inputBottomLine.removeAttribute('style');
   }
 
   changeCitiesInput() {
@@ -144,43 +108,4 @@ export class ShippingView {
   
     autoCompleteHover(); //Inject into library
   }
-
-  colorInvalidBottomLine(input) {
-    let inputBottomLine = input?.nextElementSibling || input.parentNode.nextElementSibling;
-    inputBottomLine.style.borderBottomColor = '#ff6666';
-  }
-
-  getInputsForFilter() {
-    const inputs = {
-      onlyNumbers : [],
-      onlyLetters : []
-    };
-
-    document.querySelectorAll('input').forEach(input => {
-      if (input.hasAttribute('filter')) {
-        if (input.getAttribute('filter') === 'onlyNumbers') {
-          inputs.onlyNumbers.push(input);
-        }
-
-        if (input.getAttribute('filter') === 'onlyLetters') {
-          inputs.onlyLetters.push(input);
-        }
-      }
-    });
-
-    return inputs;
-  }
-
-  isDisabled(element) {
-    if (element.hasAttribute('disabled')) {
-      return true;
-    }
-    return false;
-  } // CODE REPETITION
-
-
-  setInputValue(input, value) {
-    input.value = value;
-  }
 }
-

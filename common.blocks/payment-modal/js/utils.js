@@ -2,7 +2,7 @@ import {HTML} from './HTML.js';
 
 export class Utils {
   constructor() {
-    this.HTML = new HTML();
+    this.HTML = new HTML(); //Make an Object
 
     this.pageWrapper = document.querySelector('.payment-modal');
   }

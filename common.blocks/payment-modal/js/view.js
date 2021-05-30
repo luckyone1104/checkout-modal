@@ -1,7 +1,6 @@
 export class View {
   constructor() {
     this.DOMElements = {};
-    this.visiblePages = new Set;
     this.ready = false;
   }
 
@@ -10,19 +9,21 @@ export class View {
   }
 
   init() {
-    this.setVisiblePages();
-    this.checkIfPageIsVisible()
+    this.setUnlockedPages();
+    this.checkIfPageIsUnlocked()
     this.getDOMElements();
     this.buildView();
 
     this.ready = true;
   }
 
-  setVisiblePages() {
-    let howManyPagesAreVisible = 2;
+  setUnlockedPages() {
+    this.unlockedPages = new Set;
+    
+    let howManyPagesAreUnlocked = 2;
 
-    for (let i = 0; i < howManyPagesAreVisible; i++) {
-      this.visiblePages.add(i);
+    for (let i = 0; i < howManyPagesAreUnlocked; i++) {
+      this.unlockedPages.add(i);
     }
   }
 
@@ -58,13 +59,12 @@ export class View {
     this.unlockDisabledButton();
   }
 
-  checkIfPageIsVisible() {
-    for (let index of this.visiblePages) {
+  checkIfPageIsUnlocked() {
+    for (let index of this.unlockedPages) {
       if (index === this.getCurrentPage()) {
         return true;
       }
     }
-
     document.location.hash = '#order';
   }
 
@@ -117,16 +117,16 @@ export class View {
   }
 
   disableMenuButtons() {
-    for (let i = 0; i < this.DOMElements.menuButtons.length; i++) {
-      this.DOMElements.menuButtons[i].setAttribute('disabled', true);
-      this.DOMElements.menuButtons[i].classList.add('menu-element_disabled');
-    }
+    this.DOMElements.menuButtons.forEach(menuButton => {
+      menuButton.setAttribute('disabled', true);
+      menuButton.classList.add('menu-element_disabled');
+    });
   }
 
   unlockDisabledButton() {
     let menuButtons = this.DOMElements.menuButtons;
 
-    this.visiblePages.forEach(index => {
+    this.unlockedPages.forEach(index => {
       if (index < 4 && menuButtons[index].hasAttribute('disabled')) {
         menuButtons[index].removeAttribute('disabled');
         menuButtons[index].classList.remove('menu-element_disabled');
@@ -182,5 +182,73 @@ export class View {
     })
 
     return values;
+  }
+
+  buildInputValues() {
+    let inputs = this.getInputsForSessionStorage();
+    let values = JSON.parse(sessionStorage.getItem(this.getCurrentPage()));
+
+    if (!values) return null;
+
+    inputs.forEach((input, index) => {
+      if (values[index] !== 'undefined') {
+        input.value = values[index];
+      }
+    })
+
+    if (inputs[0].tagName === 'SELECT' && inputs[0].value !== '') {
+      this.hideSelectBoxPlaceHolder();
+    }
+  }
+
+  getInputsForSessionStorage() {
+    return document.querySelectorAll('.sessionInput');
+  }
+
+  getInputsForFilter() {
+    const inputs = {
+      onlyNumbers : [],
+      onlyLetters : []
+    };
+
+    document.querySelectorAll('input').forEach(input => {
+      if (input.hasAttribute('filter')) {
+        if (input.getAttribute('filter') === 'onlyNumbers') {
+          inputs.onlyNumbers.push(input);
+        }
+
+        if (input.getAttribute('filter') === 'onlyLetters') {
+          inputs.onlyLetters.push(input);
+        }
+      }
+    });
+
+    return inputs;
+  }
+
+  isDisabled(element) {
+    if (element.hasAttribute('disabled')) {
+      return true;
+    }
+    return false;
+  }
+
+  setInputValue(input, value) {
+    input.value = value;
+  }
+
+  colorInvalidBottomLine(input) {
+    let inputBottomLine = input?.nextElementSibling || input.parentNode.nextElementSibling;
+    inputBottomLine.style.borderBottomColor = '#ff6666';
+  }
+
+  changeInputBottomLineStyleOnFocus(input) {
+    let inputBottomLine = input.nextElementSibling;
+    inputBottomLine.style.borderBottomColor = "#71b1ce";
+  }
+
+  changeInputBottomLineStyleOnBlur(input) {
+    let inputBottomLine = input.nextElementSibling;
+    inputBottomLine.removeAttribute('style');
   }
 }

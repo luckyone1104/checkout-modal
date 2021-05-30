@@ -1,24 +1,11 @@
-import {Observer} from '../observer.js'
-
 export class ConfirmationController {
-  constructor(mainView, model, view, utils) {
-    this.mainView = mainView;
+  constructor(model, view) {
     this.model = model;
     this.view = view;
-    this.utils = utils;
-    this.observers = {
-      clickOnPagingButton : new Observer(),
-      failValidation      : new Observer(),
-      focusOnInput        : new Observer(),
-      blurOfInput         : new Observer(),
-    };
   }
 
   init() {
     this.initView();
-    // CHECK WITH EMPTY SESSION STORAGE
-
-    this.bindSubscribers();
     this.bindEvents();
   }
 
@@ -35,21 +22,19 @@ export class ConfirmationController {
         return null;
       }
 
-      let inputs = this.mainView.getInputsForValidation();
+      let inputs = this.view.getInputsForValidation();
 
       let isValid = this.model.isValid(inputs);
 
       if (isValid.status) {
-        this.mainView.visiblePages.add(this.mainView.getCurrentPage() + 1);
+        window.app.observer.callEvent('clickOnNextButton', this.view.getCurrentPage() + 1);
 
-        this.model.saveInputsData(this.mainView.getCurrentPage(), this.mainView.getInputsValues());
-
-        this.observers.clickOnPagingButton.callEvent('success');
+        this.model.saveInputsData(this.view.getCurrentPage(), this.view.getInputsValues());
       } 
       else {
         event.preventDefault();
         for (let input of isValid.inputs) {
-          this.observers.failValidation.callEvent(input);
+          window.app.observer.callEvent('failValidation', input);
         }
       }        
     })
@@ -57,16 +42,14 @@ export class ConfirmationController {
     const previousButton = this.view.DOMElements.previousPageButton
 
     previousButton.addEventListener('click', () => {
-      this.model.saveInputsData(this.mainView.getCurrentPage(), this.mainView.getInputsValues());
-      
-      this.observers.clickOnPagingButton.callEvent('payment');
+      this.model.saveInputsData(this.view.getCurrentPage(), this.view.getInputsValues());
     })
 
     this.view.DOMElements.inputs.forEach(input => {
       this.createInputEvent(input);
     });
 
-    const inputsForFilter = this.mainView.getInputsForFilter();
+    const inputsForFilter = this.view.getInputsForFilter();
 
     inputsForFilter.onlyNumbers.forEach(input => {
       input.addEventListener('input', () => {
@@ -87,21 +70,11 @@ export class ConfirmationController {
 
   createInputEvent(input) {
     input.addEventListener('focus', () => {
-      this.observers.focusOnInput.callEvent(input);
+      window.app.observer.callEvent('focusOnInput', input);
     });
 
     input.addEventListener('blur', () => {
-      this.observers.blurOfInput.callEvent(input);
+      window.app.observer.callEvent('blurOfInput', input);
     })
-  }
-
-  bindSubscribers() {
-    this.observers.clickOnPagingButton.subscribeEvent(this.utils.removePage.bind(this.utils));
-    this.observers.clickOnPagingButton.subscribeEvent(this.utils.renderPage.bind(this.utils));
-    
-    this.observers.failValidation.subscribeEvent(this.view.colorInvalidBottomLine.bind(this.view));
-
-    this.observers.focusOnInput.subscribeEvent(this.view.changeInputBottomLineStyleOnFocus.bind(this.view));
-    this.observers.blurOfInput.subscribeEvent(this.view.changeInputBottomLineStyleOnBlur.bind(this.view));
   }
 }

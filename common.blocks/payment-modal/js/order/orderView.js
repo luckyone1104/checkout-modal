@@ -1,7 +1,8 @@
-export class OrderView {
+import {View} from '../view.js'
+
+export class OrderView extends View {
   constructor() {
-    this.DOMElements = {};
-    this.ready = false;
+    super();
   }
 
   isReady() {

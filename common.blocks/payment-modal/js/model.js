@@ -9,7 +9,9 @@ export class Model {
       messagingSenderId: "499882402690",
       appId: "1:499882402690:web:1c2e1715d7fbbc66f8e59b"
     };
-    this.data = JSON.parse(sessionStorage.getItem('data')) || null;
+    this.data = {};
+    this.updateInterval = 7000;
+
     this.ready = false;
   }
 
@@ -18,18 +20,46 @@ export class Model {
   }
 
   async init() {
-    firebase.initializeApp(this.firebaseConfig);
-    this.database = firebase.database();
-    this.data ? this.getData() : await this.getData();
+    this.initFirebase();
+    this.listenToDataUpdates();
+
     this.ready = true;
   }
 
-  async getData() {  
-    const serverData = await this.queryData();
-    this.modifyData(serverData);
-    this.updateData(serverData);
+  initFirebase() {
+    firebase.initializeApp(this.firebaseConfig);
+    this.database = firebase.database();
+  }
 
-    return this.data;
+  async getData() {
+    this.doesSessionDataExist() ? this.setDataFromSessioinStorage() : await this.setDataFromServer();
+  }
+
+  doesSessionDataExist() {
+    return sessionStorage.getItem('data') !== 'undefined' ? true : false;
+  }
+
+  setDataFromSessioinStorage() {
+    console.log('Setting data from session storage...');
+    this.data = JSON.parse(sessionStorage.getItem('data'));
+  }
+
+  async setDataFromServer() {
+    console.log('Downloading data from server...');
+    this.data = await this.getServerData();
+  }
+
+  async getServerData() {
+    const serverData = await this.queryData();
+
+    this.modifyData(serverData);
+    this.saveDataToSessionStorage(serverData)
+
+    return serverData;
+  }
+
+  saveDataToSessionStorage(data) {
+    sessionStorage.setItem('data', JSON.stringify(data));
   }
 
   queryData() {
@@ -65,12 +95,21 @@ export class Model {
     return result;
   }
 
-  updateData(serverData) {
+  listenToDataUpdates() {
+     setInterval(async () => {
+      let serverData = await this.getServerData();
+      this.compareData(serverData);
+    }, this.updateInterval);
+  }
+
+  compareData(serverData) {
     if (JSON.stringify(serverData) !== JSON.stringify(this.data)) {
-      console.log('Updating local data...')
+      console.log('Updating local data...');
+
       sessionStorage.setItem('data', JSON.stringify(serverData));
       this.data = JSON.parse(sessionStorage.getItem('data'));
-      // VIEW REBUILD MUST BE INVOKED
+
+      window.app.observer.callEvent('updateData');
     }
   }
 

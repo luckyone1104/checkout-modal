@@ -1,11 +1,8 @@
-export class PaymentView {
-  constructor() {
-    this.DOMElements = {};
-    this.ready = false;
-  }
+import {View} from '../view.js'
 
-  isReady() {
-    return this.ready;
+export class PaymentView extends View {
+  constructor() {
+    super();
   }
 
   init(data) {
@@ -25,12 +22,17 @@ export class PaymentView {
     this.DOMElements.visaLogo = document.querySelector('.visa-logo');
     this.DOMElements.masterCardLogo = document.querySelector('.master-card-logo');
     this.DOMElements.cardNumber = document.querySelector('.card-number');
+    this.DOMElements.numberNests = this.DOMElements.cardNumber.querySelectorAll('span')
     this.DOMElements.cardHolderName = document.querySelector('.card-holder-name');
     this.DOMElements.expiryDate = document.querySelector('.expiry-date');
     this.DOMElements.cardNumberInput = document.querySelector('#card-number');
     this.DOMElements.nameOnCardInput = document.querySelector('#name-on-card');
     this.DOMElements.validThroughInput = document.querySelector('#valid-through');
     this.DOMElements.cvvInput = document.querySelector('#card-cvv');
+  }
+
+  getInputsForDisplayingOnCard() {
+    return document.querySelectorAll('.displayOnCard');
   }
 
   saveData(data) {
@@ -42,79 +44,54 @@ export class PaymentView {
   }
 
   buildView() {
-    this.buildCardDefaultValues();
+    this.buildCreditCard();
     this.buildInputValues();
   }
 
-  buildCardDefaultValues() {
-    this.buildDefaultCardHolderName();
-    this.buildDefaultExpiryDate();
-    this.buildDefaultCardNumber();
+  buildCreditCard() {
+    const sessionValues = this.getSessionStorageCardValues() || [];
+
+    if (!sessionValues) return null;
+
+
+    sessionValues[0] ? this.buildCardHolderName(sessionValues[0]) : this.buildCardHolderName(this.cardDefaultValues.name);
+    sessionValues[1] ? this.buildCardNumber(sessionValues[1]) : this.buildCardNumber(this.cardDefaultValues.number);
+    sessionValues[2] ? this.buildExpiryDate(sessionValues[2]) : this.buildExpiryDate(this.cardDefaultValues.expiry);
   }
 
-  buildDefaultCardHolderName() {
-    this.DOMElements.cardHolderName.innerHTML = this.cardDefaultValues.name;
+  getSessionStorageCardValues() {
+    const cardValues = JSON.parse(sessionStorage.getItem(this.getCurrentPage()));
+
+    if (!cardValues) return null;
+
+    this.modifyCardNumber(cardValues);
+
+    return cardValues;
   }
 
-  buildDefaultExpiryDate() {
-    this.DOMElements.expiryDate.innerHTML = this.cardDefaultValues.expiry;
+  modifyCardNumber(cardValues) {
+    cardValues[1] = cardValues[1].split(' ');
   }
 
-  buildDefaultCardNumber() {
-    let numberNests = this.DOMElements.cardNumber.querySelectorAll('span');
-    
-    numberNests.forEach((nest, index) => {
-      nest.innerHTML = this.cardDefaultValues.number[index];
+  buildCardHolderName(value) {
+    this.DOMElements.cardHolderName.innerHTML = value.toUpperCase();
+  }
+
+  buildCardNumber(value) {
+    if (value[0] === '') {
+      value = this.cardDefaultValues.number;
+    }
+
+    this.DOMElements.numberNests.forEach((nest, index) => {
+      if (value[index]) {
+        nest.innerHTML = value[index] ? value[index] : '';
+      }
+      
     });
   }
 
-  buildInputValues() {
-    let currentPage = 2;
-    let inputs = this.getInputsForSessionStorage();
-    let values = JSON.parse(sessionStorage.getItem(currentPage));
-
-    if (!values) return null;
-
-    inputs.forEach((input, index) => {
-      if (values[index] !== 'undefined') {
-        input.value = values[index];
-      }
-    })
-  }
-
-  getInputsForSessionStorage() {
-    return document.querySelectorAll('.sessionInput');
-  }
-
-  changeInputBottomLineStyleOnFocus(input) {
-    let inputBottomLine = input.nextElementSibling;
-    inputBottomLine.style.borderBottomColor = "#71b1ce";
-  }
-
-  changeInputBottomLineStyleOnBlur(input) {
-    let inputBottomLine = input.nextElementSibling;
-    inputBottomLine.removeAttribute('style');
-  }
-
-  isDisabled(element) {
-    if (element.hasAttribute('disabled')) {
-      return true;
-    }
-    return false;
-  }
-
-  unlockDisabledButton(nextButtonIndex) {
-    let menuButton = this.DOMElements.menuButtons[+nextButtonIndex];
-
-    if (menuButton && menuButton.hasAttribute('disabled')) {
-      menuButton.removeAttribute('disabled');
-      menuButton.classList.remove('menu-element_disabled')
-    }
-  }
-
-  colorInvalidBottomLine(input) {
-    let inputBottomLine = input?.nextElementSibling || input.parentNode.nextElementSibling;
-    inputBottomLine.style.borderBottomColor = '#ff6666';
+  buildExpiryDate(value) {
+    this.DOMElements.expiryDate.innerHTML = value;
   }
 
   resizeCreditCard() {
@@ -127,33 +104,12 @@ export class PaymentView {
     creditCard.style.transform = `scale(${creditCardScale})`;
   }
 
-  getInputsForFilter() {
-    const inputs = {
-      onlyNumbers : [],
-      onlyLetters : []
-    };
-
-    this.DOMElements.inputs.forEach(input => {
-      if (input.hasAttribute('filter')) {
-        if (input.getAttribute('filter') === 'onlyNumbers') {
-          inputs.onlyNumbers.push(input);
-        }
-
-        if (input.getAttribute('filter') === 'onlyLetters') {
-          inputs.onlyLetters.push(input);
-        }
-      }
-    });
-
-    return inputs;
-  }
-
   writeCardHolderName(name) {
     this.DOMElements.cardHolderName.innerHTML = name;
   }
 
   writeExpiryDate(date) {
-    this.DOMElements.validThroughInput.innerHTML = date;
+    this.DOMElements.expiryDate.innerHTML = date;
   }
 
   writeCreditCardNumber(number) {
@@ -198,10 +154,6 @@ export class PaymentView {
   showMasterCardLogo(visaLogo, masterCardLogo) {
     visaLogo.style.display = 'none';
     masterCardLogo.removeAttribute('style');
-  }
-
-  setInputValue(input, value) {
-    input.value = value;
   }
 }
 

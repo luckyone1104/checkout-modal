@@ -190,23 +190,23 @@ export class HTML {
                 <div class="payment-details__inputs-wrapper">
                   <div class="payment-details__input-form">
                     <label class="payment-details__label" for="name-on-card">Name on card *</label>
-                    <input class="payment-details__name-on-card checkout-input validationSensitive sessionInput" id="name-on-card" type="text" maxlength="19" placeholder="Arjun Kunwar" filter="onlyLetters">
+                    <input class="payment-details__name-on-card checkout-input validationSensitive sessionInput displayOnCard" id="name-on-card" type="text" maxlength="19" placeholder="Arjun Kunwar" filter="onlyLetters">
                     <div class="payment-details__bottom-line"></div>
                   </div>
                   <div class="payment-details__input-form">
                     <label class="payment-details__label" for="card-number">Card Number *</label>
-                    <input class="payment-details__card-number checkout-input validationSensitive sessionInput" id="card-number" type="text" minlength="19" maxlength="19" placeholder="5465 3232 4152 5931" filter="onlyNumbers">
+                    <input class="payment-details__card-number checkout-input validationSensitive sessionInput displayOnCard" id="card-number" type="text" minlength="19" maxlength="19" placeholder="5465 3232 4152 5931" filter="onlyNumbers">
                     <div class="payment-details__bottom-line"></div>
                   </div>
                   <div class="payment-details__input-row">
                     <div class="payment-details__input-form payment-details__valid-through-wrapper">
                       <label class="payment-details__label" for="valid-through">Valid Through *</label>
-                      <input class="payment-details__valid-through checkout-input validationSensitive sessionInput" id="valid-through" type="text" minlength="5" maxlength="5" placeholder="02/24" filter="onlyNumbers">
+                      <input class="payment-details__valid-through checkout-input validationSensitive sessionInput displayOnCard" id="valid-through" type="text" minlength="5" maxlength="5" placeholder="02/24" filter="onlyNumbers">
                       <div class="payment-details__bottom-line"></div>
                     </div>
                     <div class="payment-details__input-form payment-details__cvv-wrapper">
                       <label class="payment-details__label" for="card-cvv">CVV *</label>
-                      <input class="payment-details__cvv checkout-input validationSensitive sessionInput" type="text" id="card-cvv" minlength="3" maxlength="3" placeholder="512" filter="onlyNumbers">
+                      <input class="payment-details__cvv checkout-input validationSensitive sessionInput displayOnCard" type="text" id="card-cvv" minlength="3" maxlength="3" placeholder="512" filter="onlyNumbers">
                       <div class="payment-details__bottom-line"></div>
                     </div>
                   </div> 

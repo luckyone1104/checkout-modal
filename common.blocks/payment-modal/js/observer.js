@@ -1,13 +1,18 @@
 export class Observer {
   constructor() {
-    this.subscribers = [];
+    this.subscribers = {};
   }
 
-  subscribeEvent(subscriber) {
-    this.subscribers.push(subscriber);
+  subscribeEvent(name, subscriber) {
+    this.subscribers[name] = this.subscribers[name] || [];
+
+    if (typeof subscriber === 'function') {
+      this.subscribers[name].push(subscriber);
+    }
   }
 
-  callEvent(data) {
-    this.subscribers.forEach(subscriber => subscriber(data))
+  callEvent(name, data) {
+    if (!this.subscribers[name]) return null;
+    this.subscribers[name].forEach(subscriber => subscriber(data));
   }
 };
